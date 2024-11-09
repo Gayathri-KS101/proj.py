@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Spam Classifier</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --gradient: linear-gradient(90deg, #ee52ca, #08b2e3, #57d7a8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @keyframes neonGradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(90deg, #b721ff, #21d4fd);
+
+            animation: neonGradient 8s ease-in-out infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .overlay {
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+            background: rgba(0, 0, 0, 0.7);
+            position: absolute;
+            top: 0;
+        }
+
+        .overlay-text {
+            font-size: 3rem;
+            font-weight: 900;
+            line-height: 1;
+            text-transform: uppercase;
+            background-image: var(--gradient);
+            background-size: 300%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: inline-block;
+            background-position: left;
+            /* Set initial position */
+            transition: background-position 350ms;
+            /* Smooth transition */
+        }
+
+        .overlay-text:hover {
+            background-position: right;
+            /* Move gradient to the right on hover */
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            max-width: 400px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .overlay-text {
+                font-size: 2.5rem;
+                padding: 10px 0;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .overlay {
+                padding: 15px 0;
+            }
+
+            .overlay-text {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .overlay-text {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="overlay">
+        <div class="overlay-text">EMAIL SPAM CLASSIFIER</div>
+    </div>
+    <div class="container">
+        <form action="/predict" method="POST">
+            <textarea name="message" placeholder="Enter your email message here..."></textarea>
+            <button type="submit">Check</button>
+        </form>
+
+        <!-- Display prediction result here -->
+        <div class="result">
+            {% if prediction %}
+            Prediction: {{ prediction }}
+            {% else %}
+            Waiting for input...
+            {% endif %}
+        </div>
+
+    </div>
+</body>
+
+</html>
